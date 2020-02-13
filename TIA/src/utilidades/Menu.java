@@ -1,4 +1,4 @@
-package agencia;
+package utilidades;
 
 import java.util.Scanner;
 
