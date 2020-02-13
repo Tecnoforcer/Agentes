@@ -41,30 +41,32 @@ public class Main {
 			case 1:
 				if (!encripado) {
 					for (int i = 0; i < agentes.length; i++) {
-					System.out.println(agentes[i].toString());
-				}
+						if (agentes[i] != null) {
+							System.out.println(agentes[i].toString());
+						}
+					}
 				}
 				break;
 			case 2:
 				if (!encripado) {
 					double salarioMinimo = 0;
-				Scanner readDouble = new Scanner(System.in);
-				try {
-					System.out.println("Mostar agentes con salario mayor a  {insertar salario}");
-					salarioMinimo = readDouble.nextDouble();
-				} catch (Exception e) {
-					// TODO: handle exception
-				}
-				for (Agente a : agentes) {
-					if (a.getSalario() >= salarioMinimo) {
-						System.out.println(a.toString());
+					Scanner readDouble = new Scanner(System.in);
+					try {
+						System.out.println("Mostar agentes con salario mayor a  {insertar salario}");
+						salarioMinimo = readDouble.nextDouble();
+					} catch (Exception e) {
+						// TODO: handle exception
 					}
-				}
+					for (Agente a : agentes) {
+						if (a != null && (a.getSalario() >= salarioMinimo)) {
+							System.out.println(a.toString());
+						}
+					}
 				}
 				break;
 			case 3:
 				if (!encripado) {
-				Operaciones.nuevoPiso(pisos);
+					Operaciones.nuevoPiso(pisos);
 				}
 				break;
 			case 4:
@@ -75,32 +77,32 @@ public class Main {
 			case 5:
 				if (!encripado) {
 					do {
-					opcAgente = Menu.menuAgregarAgente();
-					switch (opcAgente) {
-					case 1:
-						Operaciones.nuevoJefazo(agentes);
-						break;
-					case 2:
-						Operaciones.nuevoEspia(agentes, pisos);
-						break;
-					case 3:
-						Operaciones.nuevo007(agentes, armas);
-						break;
-					}
-				} while (opcAgente != 4);
+						opcAgente = Menu.menuAgregarAgente();
+						switch (opcAgente) {
+						case 1:
+							Operaciones.nuevoJefazo(agentes);
+							break;
+						case 2:
+							Operaciones.nuevoEspia(agentes, pisos);
+							break;
+						case 3:
+							Operaciones.nuevo007(agentes, armas);
+							break;
+						}
+					} while (opcAgente != 4);
 				}
 				break;
 			case 6:
 				IOdatos.encriptarInfo(pisos, armas);
-				encripado=true;
+				encripado = true;
 				break;
 			case 7:
 				if (encripado) {
 					IOdatos.desEncriptar(pisos, armas);
-					encripado=false;
-				}else {
+					encripado = false;
+				} else {
 					System.out.println("no hay datos que desencriptar");
-				}				
+				}
 				break;
 			case 8:
 
