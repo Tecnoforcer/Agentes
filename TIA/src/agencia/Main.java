@@ -39,12 +39,15 @@ public class Main {
 			opc = Menu.meñuPrincipal();
 			switch (opc) {
 			case 1:
-				for (int i = 0; i < agentes.length; i++) {
+				if (!encripado) {
+					for (int i = 0; i < agentes.length; i++) {
 					System.out.println(agentes[i].toString());
+				}
 				}
 				break;
 			case 2:
-				double salarioMinimo = 0;
+				if (!encripado) {
+					double salarioMinimo = 0;
 				Scanner readDouble = new Scanner(System.in);
 				try {
 					System.out.println("Mostar agentes con salario mayor a  {insertar salario}");
@@ -57,15 +60,21 @@ public class Main {
 						System.out.println(a.toString());
 					}
 				}
+				}
 				break;
 			case 3:
+				if (!encripado) {
 				Operaciones.nuevoPiso(pisos);
+				}
 				break;
 			case 4:
-				Operaciones.nuevoArma(armas);
+				if (!encripado) {
+					Operaciones.nuevoArma(armas);
+				}
 				break;
 			case 5:
-				do {
+				if (!encripado) {
+					do {
 					opcAgente = Menu.menuAgregarAgente();
 					switch (opcAgente) {
 					case 1:
@@ -77,15 +86,21 @@ public class Main {
 					case 3:
 						Operaciones.nuevo007(agentes, armas);
 						break;
-
 					}
 				} while (opcAgente != 4);
+				}
 				break;
 			case 6:
 				IOdatos.encriptarInfo(pisos, armas);
+				encripado=true;
 				break;
 			case 7:
-				IOdatos.desEncriptar(pisos, armas);
+				if (encripado) {
+					IOdatos.desEncriptar(pisos, armas);
+					encripado=false;
+				}else {
+					System.out.println("no hay datos que desencriptar");
+				}				
 				break;
 			case 8:
 
