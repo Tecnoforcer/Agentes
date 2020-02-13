@@ -35,7 +35,12 @@ public class IOdatos {
 		try {
 			read = new Scanner(file);
 			for (int i = 0;; i++) {
-				armas[i] = read.nextLine();
+				if (read.hasNextLine()) {
+					armas[i] = read.nextLine();
+				} else {
+					break;
+				}
+
 			}
 
 		} catch (FileNotFoundException e1) {
@@ -61,7 +66,12 @@ public class IOdatos {
 		try {
 			read = new Scanner(file);
 			for (int i = 0;; i++) {
-				pisos[i] = read.nextLine();
+				
+				if (read.hasNextLine()) {
+					pisos[i] = read.nextLine();
+				} else {
+					break;
+				}
 			}
 
 		} catch (FileNotFoundException e1) {
@@ -169,7 +179,10 @@ public class IOdatos {
 			pw = new PrintWriter(fw);
 
 			for (String p : pisos) {
-				pw.write(p);
+				if (p!=null) {
+					pw.println(p);
+				}
+				
 			}
 
 		} catch (IOException e) {
@@ -206,7 +219,10 @@ public class IOdatos {
 			pw = new PrintWriter(fw);
 
 			for (String a : armas) {
-				pw.write(a);
+				if (a!=null) {
+					pw.println(a);
+					
+				}
 			}
 
 		} catch (IOException e) {
@@ -384,4 +400,47 @@ public class IOdatos {
 		return pisos;
 	}
 
+	public static void encriptarInfo(String pisos[],String armas[]) {//falta agente 
+		File arma=new File(dirArmaTXT);
+		File piso= new File(dirPisoTXT);
+		if (arma.exists()) {
+			arma.delete();
+		}
+		if (piso.exists()) {
+			piso.delete();
+		}
+		
+		
+		IOdatos.guardarArmasBin(armas);
+		IOdatos.guardarPisosBin(pisos);
+		
+		
+		pisos=null;
+		armas=null;
+		
+	}
+	
+	public static void desEncriptar(String pisos[],String armas[]) {//falta agente
+		File arma=new File(dirArmaBIN);
+		File piso=new File(dirPisoBIN);
+		
+		if (!arma.exists()||!piso.exists()) {
+			System.out.println("el archivo no existe");
+			return;
+		}
+		armas=cargarArmasBIN();//wait, what?
+		pisos=IOdatos.cargarPisosBIN();
+		
+		arma.delete();
+		piso.delete();
+		
+		guardarArmas(armas);
+		guardarPisos(pisos);
+		
+		
+	}
+	
+	
+	
+	
 }

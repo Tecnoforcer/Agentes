@@ -21,6 +21,11 @@ public class Agente_007 extends Agente {
 		this.armas = armas;
 	}
 
+	
+	public void setContMuertes(int contMuertes) {
+		this.contMuertes += contMuertes;
+	}
+
 	public void mostrarInfo() {
 		System.out.println("Agente: " + nombre + "\n" + "Edad: " + edad + "\n" + "Dirección: " + direccion + "\n"
 				+ "salario: " + salario);
