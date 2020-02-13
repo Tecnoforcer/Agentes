@@ -15,7 +15,7 @@ import utilidades.*;
 public class Main {
 
 	public static void main(String[] args) {
-		boolean encripado = false;
+		boolean encriptado = false;
 		int opc = 0;
 		int opcAgente = 0;
 
@@ -39,7 +39,7 @@ public class Main {
 			opc = Menu.meñuPrincipal();
 			switch (opc) {
 			case 1:
-				if (!encripado) {
+				if (!encriptado) {
 					for (int i = 0; i < agentes.length; i++) {
 						if (agentes[i] != null) {
 							System.out.println(agentes[i].toString());
@@ -48,7 +48,7 @@ public class Main {
 				}
 				break;
 			case 2:
-				if (!encripado) {
+				if (!encriptado) {
 					double salarioMinimo = 0;
 					Scanner readDouble = new Scanner(System.in);
 					try {
@@ -65,17 +65,17 @@ public class Main {
 				}
 				break;
 			case 3:
-				if (!encripado) {
+				if (!encriptado) {
 					Operaciones.nuevoPiso(pisos);
 				}
 				break;
 			case 4:
-				if (!encripado) {
+				if (!encriptado) {
 					Operaciones.nuevoArma(armas);
 				}
 				break;
 			case 5:
-				if (!encripado) {
+				if (!encriptado) {
 					do {
 						opcAgente = Menu.menuAgregarAgente();
 						switch (opcAgente) {
@@ -94,12 +94,12 @@ public class Main {
 				break;
 			case 6:
 				IOdatos.encriptarInfo(pisos, armas);
-				encripado = true;
+				encriptado = true;
 				break;
 			case 7:
-				if (encripado) {
+				if (encriptado) {
 					IOdatos.desEncriptar(pisos, armas);
-					encripado = false;
+					encriptado = false;
 				} else {
 					System.out.println("no hay datos que desencriptar");
 				}
