@@ -20,13 +20,21 @@ public class Agente_E extends Agente {
 	public void setPisos(String[] pisos) {
 		this.pisos = pisos;
 	}
+	
+
+	public String[] getPisos() {
+		return pisos;
+	}
 
 	public void mostrarInfo() {
 		System.out.println("Agente: " + nombre + "\n" + "Edad: " + edad + "\n" + "Dirección: " + direccion + "\n"
 				+ "salario: " + salario);
 		System.out.println("Pisos:");
 		for (int i = 0; i < pisos.length; i++) {
-			System.out.println(pisos[i]);
+			if (pisos!=null) {
+				System.out.println(pisos[i]);
+			}
+			
 		}
 
 	}

@@ -22,6 +22,11 @@ public class Agente_007 extends Agente {
 	}
 
 	
+	
+	public String[] getArmas() {
+		return armas;
+	}
+
 	public void setContMuertes(int contMuertes) {
 		this.contMuertes += contMuertes;
 	}
@@ -31,8 +36,11 @@ public class Agente_007 extends Agente {
 				+ "salario: " + salario);
 		System.out.println("Muertes: " + contMuertes);
 		System.out.println("Armas: ");
-		for (int i = 0; i < armas.length; i++) {
-			System.out.println(armas[i]);
+		for (int i = 0; i < this.armas.length; i++) {
+			if (armas[i]!=null) {
+				System.out.println(this.armas[i]);
+			}
+			
 		}
 
 	}

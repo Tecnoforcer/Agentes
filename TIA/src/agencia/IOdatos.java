@@ -19,6 +19,7 @@ public class IOdatos {
 	private static final String dirPisoBIN = "recursos/pisos.dat";
 	// private static final String dirAgenteTXT = "recursos/agente.txt";
 	private static final String dirAgenteBIN = "recursos/agente.dat";
+	private static final String dirEstado = "recursos/estado.dat";
 
 	public static String[] cargarArma() {
 		String armas[] = new String[100];
@@ -66,7 +67,7 @@ public class IOdatos {
 		try {
 			read = new Scanner(file);
 			for (int i = 0;; i++) {
-				
+
 				if (read.hasNextLine()) {
 					pisos[i] = read.nextLine();
 				} else {
@@ -179,10 +180,10 @@ public class IOdatos {
 			pw = new PrintWriter(fw);
 
 			for (String p : pisos) {
-				if (p!=null) {
+				if (p != null) {
 					pw.println(p);
 				}
-				
+
 			}
 
 		} catch (IOException e) {
@@ -219,9 +220,9 @@ public class IOdatos {
 			pw = new PrintWriter(fw);
 
 			for (String a : armas) {
-				if (a!=null) {
+				if (a != null) {
 					pw.println(a);
-					
+
 				}
 			}
 
@@ -260,15 +261,17 @@ public class IOdatos {
 			dos = new DataOutputStream(fos);
 
 			for (String s : armas) {
-				dos.writeUTF(s);
+				if (s != null) {
+					dos.writeUTF(s);
+				}
+
 			}
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
 			try {
 				dos.close();
@@ -298,7 +301,10 @@ public class IOdatos {
 			dos = new DataOutputStream(fos);
 
 			for (String s : pisos) {
-				dos.writeUTF(s);
+				if (s != null) {
+					dos.writeUTF(s);
+				}
+
 			}
 
 		} catch (FileNotFoundException e) {
@@ -340,17 +346,14 @@ public class IOdatos {
 			}
 
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
 		} finally {
 			try {
 				dis.close();
 				fis.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -377,8 +380,104 @@ public class IOdatos {
 			dis = new DataInputStream(fis);
 
 			for (int i = 0;; i++) {
+
 				pisos[i] = dis.readUTF();
 			}
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// e.printStackTrace();
+		} finally {
+			try {
+				dis.close();
+				fis.close();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return pisos;
+	}
+
+	public static void encriptarInfo(String pisos[], String armas[], Agente[] agentes) {
+		File armaTXT = new File(dirArmaTXT);
+		File pisoTXT = new File(dirPisoTXT);
+
+		IOdatos.guardarArmasBin(armas);
+		IOdatos.guardarPisosBin(pisos);
+		guardarAgentes(agentes);
+
+		pisos = null;
+		armas = null;
+		agentes = null;
+
+		pisoTXT.delete();
+		armaTXT.delete();
+
+		setEncriptado();
+
+	}
+
+	public static void desEncriptar(String pisos[], String armas[], Agente[] agentes) {
+		File armaBIN = new File(dirArmaBIN);
+		File pisoBIN = new File(dirPisoBIN);
+		File armaTXT = new File(dirArmaTXT);
+		File pisoTXT = new File(dirPisoTXT);
+		if (!armaTXT.exists()) {
+			try {
+				armaTXT.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (!pisoTXT.exists()) {
+			try {
+				armaTXT.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		armas = cargarArmasBIN();
+		pisos = cargarPisosBIN();
+		agentes = cargarAgentes();
+
+		guardarPisos(pisos);
+		guardarArmas(armas);
+
+		armaBIN.delete();
+		pisoBIN.delete();
+		setDESEncriptado();
+
+	}
+
+	public static boolean isEncriptado() {
+		boolean encriptado = false;
+		int marca = 0;
+
+		File est = new File(dirEstado);
+
+		FileInputStream fis = null;
+		DataInputStream dis = null;
+
+		if (!est.exists()) {
+			try {
+				est.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		try {
+			fis = new FileInputStream(est);
+			dis = new DataInputStream(fis);
+
+			marca = dis.readInt();
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -390,57 +489,94 @@ public class IOdatos {
 			try {
 				dis.close();
 				fis.close();
-
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 
-		return pisos;
+		if (marca == -13) {
+			encriptado = true;
+		} else {
+			encriptado = false;
+		}
+		setEncriptado();
+
+		return encriptado;
 	}
 
-	public static void encriptarInfo(String pisos[],String armas[]) {//falta agente 
-		File arma=new File(dirArmaTXT);
-		File piso= new File(dirPisoTXT);
-		if (arma.exists()) {
-			arma.delete();
+	private static void setEncriptado() {
+		File est = new File(dirEstado);
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		if (!est.exists()) {
+			try {
+				est.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		if (piso.exists()) {
-			piso.delete();
+
+		try {
+			fos = new FileOutputStream(est);
+			dos = new DataOutputStream(fos);
+
+			dos.writeInt(-13);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+		} finally {
+			try {
+				dos.close();
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		
-		IOdatos.guardarArmasBin(armas);
-		IOdatos.guardarPisosBin(pisos);
-		
-		
-		pisos=null;
-		armas=null;
-		
+
 	}
-	
-	public static void desEncriptar(String pisos[],String armas[]) {//falta agente
-		File arma=new File(dirArmaBIN);
-		File piso=new File(dirPisoBIN);
-		
-		if (!arma.exists()||!piso.exists()) {
-			System.out.println("el archivo no existe");
-			return;
+
+	private static void setDESEncriptado() {
+		File est = new File(dirEstado);
+		FileOutputStream fos = null;
+		DataOutputStream dos = null;
+		if (!est.exists()) {
+			try {
+				est.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		armas=cargarArmasBIN();//wait, what?
-		pisos=IOdatos.cargarPisosBIN();
-		
-		arma.delete();
-		piso.delete();
-		
-		guardarArmas(armas);
-		guardarPisos(pisos);
-		
-		
+
+		try {
+			fos = new FileOutputStream(est);
+			dos = new DataOutputStream(fos);
+
+			dos.writeInt(13);
+
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
+		} finally {
+			try {
+				dos.close();
+				fos.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	}
-	
-	
-	
-	
+
 }

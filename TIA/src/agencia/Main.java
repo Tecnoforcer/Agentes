@@ -23,26 +23,30 @@ public class Main {
 		String armas[] = new String[100];
 		String pisos[] = new String[100];
 
-		armas = IOdatos.cargarArma();
-		for (int i = 0; i < armas.length; i++) {
-			if (armas[i] != null) {
-				System.out.println(armas[i]);
-			}
-
+		try {
+			armas = IOdatos.cargarArma();
+			pisos = IOdatos.cargarPisos();
+			agentes = IOdatos.cargarAgentes();
+		} catch (Exception e) {
+			// TODO: handle exception
 		}
-		armas[3] = "MP5";
-		armas[4] = "COLT";
-		armas[5] = "PANZERFAUST";
-		IOdatos.guardarArmas(armas);
+
+		encriptado = IOdatos.isEncriptado();
 
 		do {
 			opc = Menu.meñuPrincipal();
 			switch (opc) {
 			case 1:
 				if (!encriptado) {
-					for (int i = 0; i < agentes.length; i++) {
-						if (agentes[i] != null) {
-							System.out.println(agentes[i].toString());
+					for (Agente a : agentes) {
+						if (a != null) {
+							if (a instanceof Agente_007) {
+								((Agente_007) a).mostrarInfo();
+							} else if (a instanceof Agente_E) {
+								((Agente_E) a).mostrarInfo();
+							} else {
+								a.toString();
+							}
 						}
 					}
 				}
@@ -67,11 +71,24 @@ public class Main {
 			case 3:
 				if (!encriptado) {
 					Operaciones.nuevoPiso(pisos);
+					IOdatos.guardarPisos(pisos);
+					for (Agente a : agentes) {
+						if (a instanceof Agente_E) {
+							((Agente_E) a).setPisos(pisos);
+						}
+					}
 				}
 				break;
 			case 4:
 				if (!encriptado) {
+
 					Operaciones.nuevoArma(armas);
+					IOdatos.guardarArmas(armas);
+					for (Agente a : agentes) {
+						if (a instanceof Agente_007) {
+							((Agente_007) a).setArmas(armas);
+						}
+					}
 				}
 				break;
 			case 5:
@@ -89,23 +106,24 @@ public class Main {
 							Operaciones.nuevo007(agentes, armas);
 							break;
 						}
+						IOdatos.guardarAgentes(agentes);
 					} while (opcAgente != 4);
 				}
 				break;
 			case 6:
-				IOdatos.encriptarInfo(pisos, armas);
+				IOdatos.encriptarInfo(pisos, armas, agentes);
 				encriptado = true;
 				break;
 			case 7:
 				if (encriptado) {
-					IOdatos.desEncriptar(pisos, armas);
+					IOdatos.desEncriptar(pisos, armas, agentes);
 					encriptado = false;
 				} else {
 					System.out.println("no hay datos que desencriptar");
 				}
 				break;
 			case 8:
-
+				System.out.println("adew");
 				break;
 			}
 		} while (opc != 8);
