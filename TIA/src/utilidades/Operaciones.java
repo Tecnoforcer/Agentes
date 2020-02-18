@@ -12,7 +12,13 @@ import agentes.*;
  *
  */
 public class Operaciones {
-
+/**
+ * 
+ * @param vektor  (pisos[] o armas[])
+ * @return int
+ * 
+ * recibe un vector y busca el primer hueco libre
+ */
 	private static int buscarEspacioBlanco(String vektor[]) {
 
 		for (int i = 0; i < vektor.length; i++) {
@@ -25,6 +31,14 @@ public class Operaciones {
 		return -1;
 	}
 
+	/**
+	 * 
+	 * @param pisos
+	 * 
+	 * 
+	 * recibe el vector de pisos para darselo a buscarEspacioBlanco, a continuacion recibe pos (posicion) y agrega un nuevo piso en esa posicion
+	 * 
+	 */
 	public static void nuevoPiso(String pisos[]) {
 		Scanner read = new Scanner(System.in);
 		String piso = "";
@@ -45,7 +59,14 @@ public class Operaciones {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param pisos
+	 * 
+	 * 
+	 * recibe el vector de armas para darselo a buscarEspacioBlanco, a continuacion recibe pos (posicion) y agrega un nuevo arma en esa posicion
+	 * 
+	 */
 	public static void nuevoArma(String armas[]) {
 		Scanner read = new Scanner(System.in);
 		String arma = "";
@@ -54,7 +75,7 @@ public class Operaciones {
 		if (pos >= 0) {
 			try {
 				System.out.println("escriba el nombre del arma");
-				arma = read.nextLine();
+				arma = read.nextLine().toUpperCase();
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
@@ -66,7 +87,13 @@ public class Operaciones {
 		}
 
 	}
-
+/**
+ * 
+ * @param a (agentes[])
+ * @return int
+ * 
+ * recibe el vector y busca un espacio en blanco
+ */
 	private static int buscarEspacioA(Agente a[]) {
 		for (int i = 0; i < a.length; i++) {
 			if (a[i] == null) {
@@ -78,7 +105,13 @@ public class Operaciones {
 		return -1;
 
 	}
-
+/**
+ * 
+ * @param agentes
+ * 
+ * 
+ * recibe el vector agentes[] y se lo da a buscarEspacioA, recibe pos (posicion) y guarda un nuevo jefazo en esa posicion
+ */
 	public static void nuevoJefazo(Agente agentes[]) {
 		Scanner readString = new Scanner(System.in);
 		Scanner readInt = new Scanner(System.in);
@@ -115,6 +148,14 @@ public class Operaciones {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param agentes
+	 * 
+	 * 
+	 * recibe el vector agentes[] y se lo da a buscarEspacioA, recibe pos (posicion) y guarda un nuevo agente de espionaje en esa posicion
+	 */
 	public static void nuevoEspia(Agente agentes[],String pisos[]) {
 		Scanner readString = new Scanner(System.in);
 		Scanner readInt = new Scanner(System.in);
@@ -150,6 +191,14 @@ public class Operaciones {
 		}
 
 	}
+	
+	/**
+	 * 
+	 * @param agentes
+	 * 
+	 * 
+	 * recibe el vector agentes[] y se lo da a buscarEspacioA, recibe pos (posicion) y guarda un nuevo agente 007 en esa posicion
+	 */
 	public static void nuevo007(Agente agentes[],String armas[]) {
 		Scanner readString = new Scanner(System.in);
 		Scanner readInt = new Scanner(System.in);

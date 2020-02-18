@@ -10,7 +10,11 @@ import java.util.Scanner;
  *
  */
 public class Menu {
-
+/**
+ * 
+ * @return int
+ * devuelve la opcion elegida
+ */
 	public static int meñuPrincipal() {
 		int opc = 0;
 		Scanner read = new Scanner(System.in);
@@ -38,7 +42,11 @@ public class Menu {
 
 		return opc;
 	}
-
+	/**
+	 * 
+	 * @return int
+	 * devuelve la opcion elegida
+	 */
 	public static int menuAgregarAgente() {
 		int opc = 0;
 		Scanner read = new Scanner(System.in);

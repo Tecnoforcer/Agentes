@@ -9,7 +9,7 @@ import utilidades.*;
  * 
  * @author DM
  * 
- * @version 0.1.0
+ * @version 0.1.5
  *
  */
 public class Main {
@@ -23,15 +23,18 @@ public class Main {
 		String armas[] = new String[100];
 		String pisos[] = new String[100];
 
-		try {
-			armas = IOdatos.cargarArma();
-			pisos = IOdatos.cargarPisos();
-			agentes = IOdatos.cargarAgentes();
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-
 		encriptado = IOdatos.isEncriptado();
+
+		
+		if (!encriptado) {
+			try {
+				armas = IOdatos.cargarArma();
+				pisos = IOdatos.cargarPisos();
+				agentes = IOdatos.cargarAgentes();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
 
 		do {
 			opc = Menu.meñuPrincipal();
@@ -89,6 +92,7 @@ public class Main {
 							((Agente_007) a).setArmas(armas);
 						}
 					}
+					IOdatos.guardarAgentes(agentes);
 				}
 				break;
 			case 5:

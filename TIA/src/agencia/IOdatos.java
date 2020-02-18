@@ -9,7 +9,7 @@ import agentes.Agente;
  * 
  * @author DM
  * 
- * @version 0.1.0
+ * @version 0.1.6
  *
  */
 public class IOdatos {
@@ -20,7 +20,13 @@ public class IOdatos {
 	// private static final String dirAgenteTXT = "recursos/agente.txt";
 	private static final String dirAgenteBIN = "recursos/agente.dat";
 	private static final String dirEstado = "recursos/estado.dat";
-
+	
+/**
+ * 
+ * @return String[]
+ * 
+ * carga de disco las armas (formato TXT) y las devuelve en un vector
+ */
 	public static String[] cargarArma() {
 		String armas[] = new String[100];
 		File file = new File(dirArmaTXT);
@@ -33,6 +39,7 @@ public class IOdatos {
 				e.printStackTrace();
 			}
 		}
+		
 		try {
 			read = new Scanner(file);
 			for (int i = 0;; i++) {
@@ -51,7 +58,12 @@ public class IOdatos {
 
 		return armas;
 	}
-
+	/**
+	 * 
+	 * @return String[]
+	 * 
+	 * carga de disco los pisos (formato TXT) y los devuelve en un vector
+	 */
 	public static String[] cargarPisos() {
 		String pisos[] = new String[100];
 		File file = new File(dirPisoTXT);
@@ -64,6 +76,7 @@ public class IOdatos {
 				e.printStackTrace();
 			}
 		}
+		
 		try {
 			read = new Scanner(file);
 			for (int i = 0;; i++) {
@@ -83,6 +96,12 @@ public class IOdatos {
 		return pisos;
 	}
 
+	/**
+	 * 
+	 * @return Agente[]
+	 * 
+	 * carga de disco los agentes y los devuelve en un vector
+	 */
 	public static Agente[] cargarAgentes() {
 		Agente agentes[] = new Agente[100];
 		File file = new File(dirAgenteBIN);
@@ -107,7 +126,7 @@ public class IOdatos {
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			// e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -125,6 +144,12 @@ public class IOdatos {
 		return agentes;
 	}
 
+	/**
+	 * 
+	 * @param agentes (Agente[])
+	 * 
+	 * recibe el vector de agentes y lo guarda en disco
+	 */
 	public static void guardarAgentes(Agente agentes[]) {
 		File file = new File(dirAgenteBIN);
 		FileOutputStream fos = null;
@@ -162,6 +187,12 @@ public class IOdatos {
 
 	}
 
+	/**
+	 * 
+	 * @param pisos (String[])
+	 * 
+	 * recibe el vector de pisos y lo guarda en disco con formato TXT
+	 */
 	public static void guardarPisos(String pisos[]) {
 		File file = new File(dirPisoTXT);
 		FileWriter fw = null;
@@ -201,7 +232,12 @@ public class IOdatos {
 		}
 
 	}
-
+	/**
+	 * 
+	 * @param armas (String[])
+	 * 
+	 * recibe el vector de armas y lo guarda en disco con formato TXT
+	 */
 	public static void guardarArmas(String armas[]) {
 		File file = new File(dirArmaTXT);
 		FileWriter fw = null;
@@ -243,6 +279,12 @@ public class IOdatos {
 	}
 
 	// *************************************************************************************
+	/**
+	 * 
+	 * @param agentes (String[])
+	 * 
+	 * recibe el vector de armas y lo guarda en disco con formato DAT
+	 */
 	private static void guardarArmasBin(String armas[]) {
 		File file = new File(dirArmaBIN);
 		FileOutputStream fos = null;
@@ -283,6 +325,12 @@ public class IOdatos {
 		}
 	}
 
+	/**
+	 * 
+	 * @param agentes (String[])
+	 * 
+	 * recibe el vector de pisos y lo guarda en disco con formato DAT
+	 */
 	private static void guardarPisosBin(String pisos[]) {
 		File file = new File(dirPisoBIN);
 		FileOutputStream fos = null;
@@ -323,7 +371,12 @@ public class IOdatos {
 			}
 		}
 	}
-
+	/**
+	 * 
+	 * @return String[]
+	 * 
+	 * carga de disco las armas (formato DAT) y las devuelve en un vector
+	 */
 	private static String[] cargarArmasBIN() {
 		String armas[] = new String[100];
 		File file = new File(dirArmaBIN);
@@ -360,7 +413,12 @@ public class IOdatos {
 
 		return armas;
 	}
-
+	/**
+	 * 
+	 * @return String[]
+	 * 
+	 * carga de disco los pisos (formato DAT) y los devuelve en un vector
+	 */
 	private static String[] cargarPisosBIN() {
 		String pisos[] = new String[100];
 		File file = new File(dirPisoBIN);
@@ -400,8 +458,15 @@ public class IOdatos {
 
 		return pisos;
 	}
-
-	public static void encriptarInfo(String pisos[], String armas[], Agente[] agentes) {
+/**
+ * 
+ * @param pisos
+ * @param armas
+ * @param agentes
+ * 
+ * recive los vectores (pisos, armas, agentes) y los guarda en formato DAT (borra los TXT), y borra su contenido
+ */
+	public static void encriptarInfo(String pisos[], String armas[], Agente[] agentes) {//problem
 		File armaTXT = new File(dirArmaTXT);
 		File pisoTXT = new File(dirPisoTXT);
 
@@ -419,42 +484,85 @@ public class IOdatos {
 		setEncriptado();
 
 	}
-
+/**
+ * 
+ * @param pisos
+ * @param armas
+ * @param agentes
+ * 
+ * recibe los vectores (armas, pisos, agentes) y los carga de disco (elimina DAT y crea TXT)
+ * 
+ */
 	public static void desEncriptar(String pisos[], String armas[], Agente[] agentes) {
 		File armaBIN = new File(dirArmaBIN);
 		File pisoBIN = new File(dirPisoBIN);
 		File armaTXT = new File(dirArmaTXT);
 		File pisoTXT = new File(dirPisoTXT);
-		if (!armaTXT.exists()) {
-			try {
-				armaTXT.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+		if (checkPaswrd().equalsIgnoreCase("true")) {
+			armas = cargarArmasBIN();
+			pisos = cargarPisosBIN();
+			agentes = cargarAgentes();
+
+			guardarPisos(pisos);
+			guardarArmas(armas);
+
+			armaBIN.delete();
+			pisoBIN.delete();
+			
+			setDESEncriptado();
 		}
-		if (!pisoTXT.exists()) {
-			try {
-				armaTXT.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-
-		armas = cargarArmasBIN();
-		pisos = cargarPisosBIN();
-		agentes = cargarAgentes();
-
-		guardarPisos(pisos);
-		guardarArmas(armas);
-
-		armaBIN.delete();
-		pisoBIN.delete();
-		setDESEncriptado();
 
 	}
+/**
+ * 
+ * @return inserted (String)
+ * 
+ * comprueba quese introduzca la contaseña correcta
+ */
+	private static String checkPaswrd() {// falta modificar un poco
+		String pswrd = "asdfg1234";
+		String inserted = "";
+		Scanner readS = null;
+		Scanner readI = null;
+		int cont = 0;
+		int opc = 0;
 
+		while (cont != 6) {
+			System.out.println("1. introducir contraseña");
+			System.out.println("2.salir");
+			readI = new Scanner(System.in);
+			try {
+				opc = readI.nextInt();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+
+			if (opc == 1) {
+				try {
+					readS = new Scanner(System.in);
+					inserted = readS.nextLine();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				if (inserted.contentEquals(pswrd)) {
+					return "true";
+				} else {
+					cont++;
+				}
+			} else {
+				return "false";
+			}
+		}
+		
+		return "false";
+	}
+/**
+ * 
+ * @return boolean
+ * 
+ * comprueba si esta encriptado
+ */
 	public static boolean isEncriptado() {
 		boolean encriptado = false;
 		int marca = 0;
@@ -467,6 +575,7 @@ public class IOdatos {
 		if (!est.exists()) {
 			try {
 				est.createNewFile();
+				setDESEncriptado();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -495,16 +604,16 @@ public class IOdatos {
 			}
 		}
 
-		if (marca == -13) {
-			encriptado = true;
+		if (marca == 31) {
+			return true;
 		} else {
-			encriptado = false;
+			return false;
 		}
-		setEncriptado();
 
-		return encriptado;
 	}
-
+/**
+ * cambia el estado a encriptado
+ */
 	private static void setEncriptado() {
 		File est = new File(dirEstado);
 		FileOutputStream fos = null;
@@ -522,7 +631,7 @@ public class IOdatos {
 			fos = new FileOutputStream(est);
 			dos = new DataOutputStream(fos);
 
-			dos.writeInt(-13);
+			dos.writeInt(31);
 
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -542,6 +651,9 @@ public class IOdatos {
 
 	}
 
+	/**
+	 * cambia el estado a desencriptado
+	 */
 	private static void setDESEncriptado() {
 		File est = new File(dirEstado);
 		FileOutputStream fos = null;

@@ -6,7 +6,7 @@ import java.io.Serializable;
  * 
  * @author DM
  * 
- * @version 0.1.0
+ * @version 0.1.1
  *
  */
 public abstract class Agente implements Serializable {
@@ -14,7 +14,26 @@ public abstract class Agente implements Serializable {
 	protected int edad;
 	protected String direccion;
 	protected double salario;
+	
+	
+/**
+ * 
+ * @return salario (double)
+ * devuelve el salario de lagente
+ */
+	public double getSalario() {
+		return salario;
+	}
 
+
+
+	/**
+	 * 
+	 * @param nombre
+	 * @param edad
+	 * @param direccion
+	 * @param salario
+	 */
 	public Agente(String nombre, int edad, String direccion, double salario) {
 		this.nombre = nombre;
 		this.edad = edad;
@@ -22,27 +41,5 @@ public abstract class Agente implements Serializable {
 		this.salario = salario;
 	}
 
-	public String getNombre() {
-		return nombre;
-	}
-
-	public int getEdad() {
-		return edad;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public double getSalario() {
-		return salario;
-	}
-
-	@Override
-	public String toString() {
-
-		return ("Agente: " + nombre + "\n" + "Edad: " + edad + "\n" + "Dirección: " + direccion + "\n" + "salario: "
-				+ salario);
-	}
-
+	//no hace falta to string, todos los hijos tienen uno propio
 }
