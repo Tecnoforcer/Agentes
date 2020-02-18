@@ -467,8 +467,7 @@ public class IOdatos {
  * recive los vectores (pisos, armas, agentes) y los guarda en formato DAT (borra los TXT), y borra su contenido
  */
 	public static void encriptarInfo(String pisos[], String armas[], Agente[] agentes) {//problem
-		File armaTXT = new File(dirArmaTXT);
-		File pisoTXT = new File(dirPisoTXT);
+		
 
 		IOdatos.guardarArmasBin(armas);
 		IOdatos.guardarPisosBin(pisos);
@@ -478,7 +477,12 @@ public class IOdatos {
 		armas = null;
 		agentes = null;
 
+		File armaTXT = new File(dirArmaTXT);
+		File pisoTXT = new File(dirPisoTXT);
+	
 		pisoTXT.delete();
+			
+		
 		armaTXT.delete();
 
 		setEncriptado();
