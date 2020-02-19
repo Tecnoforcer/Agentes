@@ -128,9 +128,10 @@ public class Main {
 				break;
 			case 8:
 				System.out.println("adew");
+				System.exit(0);
 				break;
 			}
-		} while (opc != 8);
+		} while (true);
 	}
 
 }

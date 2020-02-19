@@ -30,7 +30,7 @@ public class IOdatos {
 	public static String[] cargarArma() {
 		String armas[] = new String[100];
 		File file = new File(dirArmaTXT);
-		Scanner read;
+		Scanner read = null;
 
 		if (!file.exists()) {
 			try {
@@ -54,6 +54,8 @@ public class IOdatos {
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}finally {
+			read.close();
 		}
 
 		return armas;
@@ -67,7 +69,7 @@ public class IOdatos {
 	public static String[] cargarPisos() {
 		String pisos[] = new String[100];
 		File file = new File(dirPisoTXT);
-		Scanner read;
+		Scanner read = null;
 
 		if (!file.exists()) {
 			try {
@@ -91,6 +93,8 @@ public class IOdatos {
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+		}finally {
+			read.close();
 		}
 
 		return pisos;
